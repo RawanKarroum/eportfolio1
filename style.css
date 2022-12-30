@@ -7,6 +7,10 @@
     box-sizing: border-box;
 }
 
+html{
+    scroll-behavior: smooth; /*when clicking on the logo at the bottom, the scrolling up effect is smooth*/
+}
+
 h1, h2, h3, h4, h5, h6{
     color: #242424;
     text-align: center;
@@ -22,6 +26,39 @@ p{
     font-size: 16px;
 }
 
+a{
+    text-decoration: none; /*this removes the underline from under all the anchor tags*/
+    position: relative;
+    transition: opacity all 300ms ease;
+}
+
+i:hover{
+    opacity: 0.7;
+}
+
+.link__hover-effect:after{
+    content: "";
+    position: absolute;
+    height: 3px;
+    width: 0;
+    bottom: -3px;/*send to bottom of the parent, dont forget to position: relative the parent which is the a*/
+    right: 0;
+    transition: all 300ms ease;
+}
+
+.link__hover-effect--white:after{
+    background-color: white;
+}
+
+.link__hover-effect--black:after{
+    background-color: black;
+}
+
+.link__hover-effect:hover:after{
+    width: 100%;/*when hovering over the anchor tags, the underline effect appears*/
+    left: 0; /*in the class before, the right was 0, and here the left is 0, this is to make the underline effect that appears when hovering over the anchor tag, to go from left to right*/
+}
+
 .flex{
     display: flex;
 }
@@ -34,10 +71,23 @@ p{
     width: 100%;
     max-width: 800px;
     margin: 0 auto;
+    padding: 0 12px;
 }
 
 .text--purple{
     color: #6030b1
+}
+
+section:nth-child(even){
+    background-color: #f8f8f8;  /*do not leave spave between : and nth, idk why but it will destroy it. this will make every even numbered section with a grey baackground color*/
+}
+
+.container{
+    padding: 50px 0;
+}
+
+.section__title{
+    padding-bottom: 20px;
 }
 
 /*NAVIGATION BAR*/
@@ -54,6 +104,7 @@ nav{
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 0 12px;
 }
 
 .nav__link--list{
@@ -63,7 +114,6 @@ nav{
 .nav__link--anchor{
     margin: 0 12px;
     color: #242424;
-    text-decoration: none; /* to remove the underline*/
     font-weight: 700; /*to make it bold*/
 }
 
@@ -115,7 +165,20 @@ nav{
     overflow: hidden;
     box-shadow: 0 8px 16px rgba(0, 0, 0 ,0.16);
     margin-bottom: 28px;
+    animation: animate-profile-picture 800ms 200ms backwards;
 }
+
+@keyframes animate-profile-picture{
+    0%{
+        transform: scale(0);
+    }
+    80%{
+        transform: scale(1.1);
+    }
+    100%{
+        transform: scale(1);
+    }
+}/*this class makes the picture trnaitin, go bigger a bit, then takes its assigned size */
 
 .about-me__picture{ /*child takes 100% of the width of its parent*/
     width: 100%;
@@ -123,21 +186,51 @@ nav{
 
 .about-me__info--title{
     margin-bottom: 16px;
+    animation: fade-up 650ms 400ms backwards; /*the second value is the delay*/
 }
 
 .about-me__info--para{
     font-size: 20px;
     margin-bottom: 28px;
+    animation: fade-up 650ms 600ms backwards;
 }
 
 .about-me__link{
     font-size: 20px;
-    text-decoration: none;
     padding: 0 16px;
 }
 
 .about-me__links{
     padding-bottom: 20px;
+    animation: fade-up 650ms 800ms backwards;
+}
+
+@keyframes fade-up {
+    0%{
+        opacity: 0;
+        transform: translateY(40px);
+    }
+    100%{
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.wave{
+    display: inline-block;/*spans by default have a display on inline, and we cant animate inline items, so we make the display inline-block*/
+    animation: animate-wave 500ms infinite ease-in-out;
+}
+
+@keyframes animate-wave {
+    0%{
+        transform: rotate(0);
+    }
+    50%{
+        transform: rotate(30deg);
+    }
+    100%{
+        transform: (0);
+    }
 }
 
 .about-me__img--container{
@@ -148,4 +241,263 @@ nav{
 
 .about-me__img{
     width: 100%;
+    animation: fade-in 1200ms 800ms backwards;
+}
+
+@keyframes fade-in{
+    0%{
+        opacity: 0;
+    }
+    100%{
+        opacity: 1;
+    }
+}
+
+/*TECH-STACK*/
+.language{
+    width: 25%;
+    display: flex;
+    justify-content: center;
+    position: relative; /*this is added when adding bottom: 0 in the language name to make the name at the bottom of the logo*/
+    
+}
+
+.language__img{
+    width: 100%;
+    max-width: 100px; /*remember this makes it responsive*/
+    transition: all 300ms;
+}
+
+.language:hover .language__img{
+    filter: brightness(80%);
+    opacity: 0.86;
+    transform: scale(0.9);
+}
+
+.language__img--wrapper{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 25px 16px;;
+}
+
+.language__list{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    flex-wrap: wrap; /*this makes the 3 languages at the bottom skip the line*/
+}
+
+.language__name{
+    position: absolute; /*this makes the language name below the logo not affecting the parent's size*/
+    bottom: 0; /*this is added to make the logo at the bottom of the name, plus the logo(parent) needs to have position: relative*/
+    transform: scale(0);
+    transition: all 300ms;
+    font-size: 20px;
+}
+
+.language:hover .language__name{
+    transform: scale(1);
+}
+
+/*PROJECTS*/
+
+.project{
+    margin-bottom: 135px;
+}
+
+.project:last-child{
+    margin-bottom: 40px; /*this targets the last element in thelist, and makes the margin smaller, as it is bigger before adding this class*/
+}
+
+.project__img{
+    width: 100%;
+    transition: all 500ms ease; /*this is to make the transition from small to big while hovering over smoother*/
+    padding-top: 16px;
+}
+
+.project__wrapper{
+    display: flex;
+    box-shadow: 0 20px 80px rgba(0, 0, 0, 0.45);
+    border-radius: 20px;
+    overflow: hidden;
+    position: relative ; /*this is added make the project box relative to its parent, which is the wrapper, not the whole page, remove this line to see what happens*/
+}
+
+.project__wrapper:before{
+    content: ""; /*always set the content in the before pseudo-selector*/
+    position: absolute; /*we do not want the position to affect anything*/
+    top:0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    width: 100%;
+    background-color: #1c1d25;
+    opacity: 0;
+    transition: opacity 450ms ease; /*it is best to state what are we transitionning, in this case, the opacity*/
+    z-index: 2;/*if this was not added, the black background effect will disappear when hovering over to make the image go from small to big*/
+}
+
+.project:hover .project__wrapper:before{ /*when hovering over, this targets the wrapper*/
+    opacity: 0.7;
+}
+
+.project:hover .project__img{/*when hovering over, this targets the iamge*/
+    transform: scale(1.07); /*this make the image bigger by 7%*/
+    filter: blur(5px);
+}
+
+.project:hover .project__description{
+    opacity: 1;
+    transform: translateY(-50%);/*this is added to center the description with the position absolute, it is added in this class cz the transition has to be made as if we are scrolling from bottom to top */
+}
+
+.projects__list {
+    padding-top: 30px;
+}
+
+.project__description{
+    position: absolute; /*try removing this line of code to see what happens, the text will not be there*/
+    top: 50%; /*to center in the middle*/
+    left: 90px; /*since we do not want to write on the right, we push everything to the left*/
+    transform: translateY(100%);
+    max-width: 550px;
+    z-index: 3; /*this is added cz the previous z-index is 2, thus all the descriptions cannot be shown*/
+    opacity: 0;/*to make the description on the image disappear, cz it still appears as white*/
+    transition: transform 450ms, opacity 300ms;/*we are targetting both the Y-axis transform and the opacity*/
+}
+
+.project__description--title, 
+.project__description--sub-title,
+.project__description--para,
+.project__description--link{
+    text-align: left;
+    color: white;
+}
+
+.project__description--title{
+    font-size: 40px;
+    margin: 16px 0;
+}
+
+.project__description--link{
+    font-size: 20px;
+    margin-right: 16px;
+}
+
+/*FOOTER*/
+
+footer{
+    background-color: #242424;
+}
+
+.footer__logo{
+    margin-bottom: 20px;;
+}
+
+.footer__social--list{
+    margin-bottom: 28px;
+    width: 100%;
+    max-width: 500px;
+    display: flex;
+    justify-content: space-around;/*this makes the links at the bottom spaced*/
+}
+.footer__logo--img{
+    height: 70px;
+    width: 70px;
+}
+
+.footer__row{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 8%;/*recommended to use percentage for responsiveness when resizing the page*/
+}
+
+.footer__social--link, 
+.footer__copyright{
+    color: #fff;
+}
+
+.footer__logo--popper{
+    color: white;
+    position: absolute;/*always use position: relative if u dont want to child's position to be affecting the parent's position*/
+    right: 0; /*this moves it to the right*/
+    top: 30px;
+    font-weight: 700;
+    opacity: 0;
+    transition: all 300ms ease;
+}
+
+.footer__anchor{
+    position: relative; /*the "top" moves right according to its parent, remove this class to see what happens*/
+    margin-bottom: 20px;
+}
+
+.footer__anchor:hover .footer__logo--popper{/*the footer__logo--popper is targetted when hovering over the logo*/
+    transform: translateX(60px);
+    opacity: 1;
+}
+
+/*SMALL PHONES, TABLETS, LARGE SMARTPHONES*/
+
+@media (max-width: 768px){
+    nav{
+        height: 68px;
+    }
+
+    h1{
+        font-size: 28px;;
+    }
+
+    .about-me__info--para{
+        font-size: 18px;
+    }
+
+    .language{
+        width: calc(100% / 3);
+    }
+
+    .project__description--para{
+        font-size: 14px;
+    }
+
+    .project__description{
+        padding-right: 30px;
+        left: 30px; /*push it a bit more to the left*/
+    }
+}
+
+/*FOR SMALL PHONES*/
+@media (max-width: 480px){
+    .nav__link:not(:last-child){ /*remove all the list items from display except for the last chile, in this contact the contact anchor tag*/
+        display: none;
+    }
+
+    .project__description{
+        padding: 0;
+        left:0;
+        width: 100%;
+    }
+
+    .project__description--para{
+        display: none; /*removes the paragraph when hovering over the projects*/
+    }
+
+    .project__description--links{
+        display: flex;
+        justify-content: center;
+    }
+
+    .project__description--title{
+        line-height: 1; /*without this class, the gap at the top of the title is bigger than the gap below the anchor tags, so we make the line-height: 1 which makes the title completely wrapping the text without leaving a gap*/
+        font-size: 32px;
+        text-align: center;
+    }
+
+    .project__description--sub-title{
+        text-align: center;
+        margin: 12px 0;
+    }
 }
